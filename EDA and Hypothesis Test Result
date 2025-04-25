@@ -1,0 +1,11 @@
+# Hypothesis Test Result:
+# Correlation Coefficient between Inflation Rate and Total Attendance: -0.3215
+
+# p-value: 0.1255
+
+# Correlation is negative (as inflation rises, attendance tends to fall slightly).
+
+# But the p-value > 0.05, meaning this relationship is not statistically significant at the 95% confidence level.
+
+# This hypothesis test explored the link between Turkey’s inflation rates and movie theater attendance from 2000 to 2023, finding 
+# a negative but statistically insignificant correlation.
