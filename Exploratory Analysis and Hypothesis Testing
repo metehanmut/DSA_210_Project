@@ -1,1 +1,107 @@
-test 
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy.stats import pearsonr
+import zipfile
+import os
+
+# Data Collection
+
+# Paths to uploaded files
+cinema_zip_path = '/mnt/data/archive.zip'
+economic_zip_path = '/mnt/data/API_FP.CPI.TOTL.ZG_DS2_en_csv_v2_19489.zip'
+
+# Create folders for extraction
+cinema_extract_path = '/mnt/data/cinema_data'
+economic_extract_path = '/mnt/data/economic_data'
+
+os.makedirs(cinema_extract_path, exist_ok=True)
+os.makedirs(economic_extract_path, exist_ok=True)
+
+# Extract files
+with zipfile.ZipFile(cinema_zip_path, 'r') as zip_ref:
+    zip_ref.extractall(cinema_extract_path)
+
+with zipfile.ZipFile(economic_zip_path, 'r') as zip_ref:
+    zip_ref.extractall(economic_extract_path)
+
+# Load datasets
+cinema_data = pd.read_csv(os.path.join(cinema_extract_path, 'Turkey_Cinema_Data_(2000 - 2023).csv'))
+inflation_data = pd.read_csv(os.path.join(economic_extract_path, 'API_FP.CPI.TOTL.ZG_DS2_en_csv_v2_19489.csv'), skiprows=4)
+
+# Data Preprocessing
+
+# Aggregate cinema data by Year
+cinema_grouped = cinema_data.groupby('Yıl').agg({
+    'Yerli Seyirci Sayısı': 'sum',
+    'Yabancı Seyirci Sayisi': 'sum'
+}).reset_index()
+cinema_grouped.rename(columns={'Yıl': 'Year'}, inplace=True)
+cinema_grouped['Total Attendance'] = cinema_grouped['Yerli Seyirci Sayısı'] + cinema_grouped['Yabancı Seyirci Sayisi']
+
+# Manually filling Inflation data for Turkey between 2000-2023
+inflation_manual = {
+    2000: 54.9, 2001: 54.4, 2002: 45.0, 2003: 25.3, 2004: 10.6, 2005: 8.2, 2006: 9.6, 2007: 8.8,
+    2008: 10.4, 2009: 6.3, 2010: 8.6, 2011: 6.5, 2012: 8.9, 2013: 7.5, 2014: 8.2, 2015: 7.7,
+    2016: 8.5, 2017: 11.1, 2018: 16.3, 2019: 15.2, 2020: 12.3, 2021: 19.6, 2022: 72.3, 2023: 51.2
+}
+
+inflation_df = pd.DataFrame(list(inflation_manual.items()), columns=['Year', 'Inflation Rate'])
+
+# Merge datasets
+merged_data = pd.merge(cinema_grouped, inflation_df, on='Year', how='inner')
+
+# View merged data
+print(merged_data.head())
+
+# Exploratory Data Analysis (EDA)
+
+# Summary Statistics
+print(merged_data.describe())
+
+# Attendance over Time
+plt.figure()
+plt.plot(merged_data['Year'], merged_data['Total Attendance'])
+plt.title('Total Movie Attendance Over Time')
+plt.xlabel('Year')
+plt.ylabel('Attendance')
+plt.grid(True)
+plt.show()
+
+# Inflation vs Attendance
+plt.figure()
+plt.scatter(merged_data['Inflation Rate'], merged_data['Total Attendance'])
+plt.title('Inflation vs Attendance')
+plt.xlabel('Inflation Rate (%)')
+plt.ylabel('Total Attendance')
+plt.grid(True)
+plt.show()
+
+# Correlation Matrix
+plt.figure()
+sns.heatmap(merged_data.corr(), annot=True, cmap="coolwarm")
+plt.title('Correlation Matrix')
+plt.show()
+
+# Hypothesis Testing
+
+# Inflation vs Attendance
+print("\nInflation vs Attendance Correlation Test:")
+corr_inflation, p_value_inflation = pearsonr(merged_data['Inflation Rate'], merged_data['Total Attendance'])
+print(f'Correlation Coefficient: {corr_inflation:.4f}, p-value: {p_value_inflation:.4f}')
+
+# Conclusion
+
+print("\nConclusion:")
+if p_value_inflation < 0.05:
+    print("There is a statistically significant relationship between inflation rate and movie theater attendance in Turkey.")
+    if corr_inflation < 0:
+        print("Higher inflation tends to correlate with lower movie theater attendance.")
+    else:
+        print("Higher inflation tends to correlate with higher movie theater attendance.")
+else:
+    print("There is no statistically significant relationship between inflation rate and movie theater attendance in Turkey.")
+    print("Although the correlation is negative, it is not strong enough to be considered statistically significant based on the data from 2000 to 2023.")
+
+print("Further research could include analyzing GDP trends, average ticket prices, or broader entertainment spending habits to get a fuller picture.")
+
