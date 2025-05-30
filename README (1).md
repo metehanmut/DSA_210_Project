@@ -1,27 +1,65 @@
-# DSA_210_Project
+# DSA_210_Project: Turkey Cinema and Economy
 
-Project Topic: "The Effect of the Economy of Turkey on Movie Theater Attendance"
+## Project Topic
+**"The Effect of the Economy of Turkey on Movie Theater Attendance"**
 
-In this project, I will analyze how the economic conditions in Turkey affect the number of people attending movie theaters. The hypothesis is that during periods of economic prosperity, people may have more disposable income, which could lead to higher movie theater attendance. Conversely, during economic downturns or crises, people may cut back on discretionary spending like entertainment. By comparing economic indicators such as Turkey's GDP, inflation rates, and consumer confidence with movie theater attendance data, I aim to uncover any correlations between economic conditions and the number of people going to the movies. 
+This project analyzes how macroeconomic indicators—GDP and inflation—affect annual movie theater attendance in Turkey.
 
-The theater attendance dataset I’m using also distinguishes between Turkish and foreign audiences, allowing me to analyze whether economic growth affects tourists and locals differently in terms of the means they have for personal entertainment.
+We explore whether people spend more on entertainment during economic prosperity and cut back during downturns, testing this hypothesis using data from 2000–2023.
 
-Data Collection:
+---
 
-Economic Data:
-https://www.macrotrends.net/global-metrics/countries/TUR/turkey/inflation-rate-cpi
-https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG?locations=TR
+## Datasets Used
 
-Movie Theater Attendance Data:
-https://www.kaggle.com/datasets/alimuratsargl/turkey-cinema-data-2000-2023
+1. **Turkey Cinema Data (2000–2023)**
+   - Source: [Kaggle - Turkey Cinema Dataset](https://www.kaggle.com/datasets/alimuratsargl/turkey-cinema-data-2000-2023)
+   - File: `Turkey_Cinema_Data_(2000 - 2023).csv`
+   
+2. **Inflation Rate Data (2000–2023)**
+   - Source: [MacroTrends - Turkey Inflation](https://www.macrotrends.net/global-metrics/countries/TUR/turkey/inflation-rate-cpi)
+   - File: `Turkey-Inflation-Rate-Annual-Change-2025-05-30-22-06.csv`
 
-Since both datasets contain yearly information, I will merge them based on the year as a common key. This will allow me to compare economic indicators with movie attendance for each corresponding year.
-Once the data is combined, I will examine trends and correlations. For example:
+3. **GDP Data**
+   - Source: [World Bank - Turkey GDP](https://data.worldbank.org/indicator/NY.GDP.MKTP.CD?locations=TR)
+   - File: `API_NY.GDP.MKTP.CD_DS2_en_csv_v2_19294.csv`
 
-If GDP grows, do more people go to the movies?
+All data was merged on the common key: **Year**.
 
-If inflation rises, does attendance drop?
+---
 
-If consumer confidence is low, do people spend less on entertainment?
+## Methods Applied:
 
-This analysis could shed light on how economic conditions influence the time people devote to personal entertainment.
+1. **Data Cleaning & Transformation**
+   - Cleaned inflation format
+   - Formatted GDP values
+   - Aligned all datasets by year (2000–2023)
+
+2. **Exploratory Data Analysis (EDA)**
+   - Plotted total audience, GDP, and inflation over time
+   - Scatter plots for GDP vs Audience, Inflation vs Audience
+   - Correlation matrix
+
+3. **Hypothesis Testing**
+   - Pearson correlation between GDP and audience
+   - P-value calculation
+
+4. **Machine Learning**
+   - Linear Regression with standardized GDP and inflation data
+   - Evaluation using RMSE and R²
+
+---
+
+## Key Findings
+
+- **GDP-Audience Correlation**: 0.626
+- **P-value**: 0.0011 (statistically significant)
+- **RMSE**: ~13.4 million
+- **R² Score**: 0.392
+
+---
+
+## Conclusion
+
+This analysis reveals a **significant and positive relationship** between GDP and movie theater attendance in Turkey from 2000 to 2023. With a correlation coefficient of 0.626 and a p-value of 0.0011, the hypothesis is supported: **economic growth correlates with increased entertainment spending**.
+
+The linear regression model also showed moderate predictive strength (R² = 0.392), suggesting GDP and inflation are useful—but not exhaustive—predictors of cinema behavior. From a sociocultural standpoint, these findings may indicate that Turkish audiences are sensitive to macroeconomic conditions when allocating budget for entertainment.
