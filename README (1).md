@@ -1,6 +1,6 @@
-# DSA_210_Project: Turkey Cinema and Economy
 
-## Project Topic
+
+## Project Topic:
 **"The Effect of the Economy of Turkey on Movie Theater Attendance"**
 
 This project analyzes how macroeconomic indicators—GDP and inflation—affect annual movie theater attendance in Turkey.
@@ -9,7 +9,7 @@ We explore whether people spend more on entertainment during economic prosperity
 
 ---
 
-## Datasets Used
+## Datasets Used:
 
 1. **Turkey Cinema Data (2000–2023)**
    - Source: [Kaggle - Turkey Cinema Dataset](https://www.kaggle.com/datasets/alimuratsargl/turkey-cinema-data-2000-2023)
@@ -23,7 +23,6 @@ We explore whether people spend more on entertainment during economic prosperity
    - Source: [World Bank - Turkey GDP](https://data.worldbank.org/indicator/NY.GDP.MKTP.CD?locations=TR)
    - File: `API_NY.GDP.MKTP.CD_DS2_en_csv_v2_19294.csv`
 
-All data was merged on the common key: **Year**.
 
 ---
 
@@ -49,7 +48,7 @@ All data was merged on the common key: **Year**.
 
 ---
 
-## Key Findings
+## Key Findings:
 
 - **GDP-Audience Correlation**: 0.626
 - **P-value**: 0.0011 (statistically significant)
@@ -58,7 +57,7 @@ All data was merged on the common key: **Year**.
 
 ---
 
-## Conclusion
+## Conclusion:
 
 This analysis reveals a **significant and positive relationship** between GDP and movie theater attendance in Turkey from 2000 to 2023. With a correlation coefficient of 0.626 and a p-value of 0.0011, the hypothesis is supported: **economic growth correlates with increased entertainment spending**.
 
